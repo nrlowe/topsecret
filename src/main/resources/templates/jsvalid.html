@@ -1,0 +1,126 @@
+<!DOCTYPE HTML>
+<html>
+<head> 
+    <title>Getting Started: Serving Web Content</title> 
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <link href="/css/jsvalid.css" rel="stylesheet">
+</head>
+<script>
+    function validateForm(){
+        var error = false;
+        var fn = document.getElementById("firstName").value;
+        var ln = document.getElementById("LastName").value;
+        var npiValue = document.getElementById("npiNumber").value;
+        var phoneValue = document.getElementById("phoneNumber").value;
+        var emailValue = document.getElementById("emailAddress").value;
+        var addressValue = document.getElementById("businessAddress").value;
+        var nameReg = new RegExp("^[A-Z][a-z]{1,50}$");
+        var npiReg = new RegExp("^[0-9]{10}$");
+        var addressReg = new RegExp("^[0-9]+[ ]+[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]*$");
+        var emailReg = new RegExp("^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$");
+        if(!nameReg.test(fn)){
+            document.getElementById("fn_error").innerHTML = "First name must be more than 1 letter";
+            error = true;
+        } else {
+            document.getElementById("fn_error").innerHTML = "";
+        }
+        if(!nameReg.test(ln)){
+            document.getElementById("ln_error").innerHTML = "Last name must be more than 1 letter";
+            error = true;
+        } else {
+            document.getElementById("ln_error").innerHTML = "";
+        }
+        if(!npiReg.test(npiValue)){
+            document.getElementById("npi_error").innerHTML = "NPI number must be 10 digits";
+            error = true;
+        } else {
+            document.getElementById("npi_error").innerHTML = "";
+        }
+        if(!addressReg.test(addressValue)){
+            document.getElementById("address_error").innerHTML = "Please enter a valid address";
+            error = true;
+        } else {
+            document.getElementById("address_error").innerHTML = "";
+        }
+        if(!npiReg.test(phoneValue)){
+            document.getElementById("phone_error").innerHTML = "Phone number must be 10 digits";
+            error = true;
+        } else {
+            document.getElementById("phone_error").innerHTML = "";
+        }
+        if(!emailReg.test(emailValue)){
+            document.getElementById("email_error").innerHTML = "Please enter a valid email";
+            error = true;
+        } else {
+            document.getElementById("email_error").innerHTML = "";
+        }
+        if(error){
+            return false;
+        } else { 
+            alert("New User Submitted!");
+        }
+    }
+
+    function checkNumerical(event, value){
+        var code = event.keyCode || event.charCode;
+        if(code === 8 || code === 46){
+            return true;
+        }
+        if(isNaN(event.key)){
+            if(value === 'npi'){
+                document.getElementById("npi_error").innerHTML = "NPI values must be numerical";
+            } else {
+                document.getElementById("phone_error").innerHTML = "Phone values must be numerical";
+            }
+            return false;
+        } else {
+            if(value === 'npi'){
+                document.getElementById("npi_error").innerHTML = "";
+            } else {
+                document.getElementById("phone_error").innerHTML = "";
+            }
+            return true;
+        }
+    }
+</script>
+<body>
+    <form th:action="@{/}" name="userInformation" onsubmit="return validateForm()">
+        <div class="fname">
+            <span class="title">First Name</span>
+            <input type="text" placeholder= "Jane" id="firstName" value="" required>
+            <span class="error"><p id="fn_error"></p></span>
+        </div>
+        <div class="lname">
+            <span class="title">Last Name</span>
+            <input type="text" placeholder= "Doe" id="LastName" value = "" required>
+            <span class="error"><p id="ln_error"></p></span>
+        </div>
+        <div class="npi">
+            <span class="title">NPI Number</span>
+            <input type="text" id="npiNumber" placeholder= "0123456789" value = "" required onkeydown="return checkNumerical(event, 'npi')">
+            <span class="error"><p id="npi_error"></p></span>
+        </div>
+        <div class="busaddress">
+            <span class="title">Business Address</span>
+            <input type="text" placeholder= "101 Smooth Street" id="businessAddress" value = "" required>
+            <span class="error"><p id="address_error"></p></span>
+        </div>
+        <div class="phone">
+            <span class="title">Phone Number</span>
+            <input type="text" id="phoneNumber" placeholder= "1234567890" value = "" required onkeydown="return checkNumerical(event, 'phone')">
+            <span class="error"><p id="phone_error"></p></span>
+        </div>
+        <div class="email">
+            <span class="title">Email Address</span>
+            <input type="text" id="emailAddress" placeholder= "example@gmail.com" value = "" required>
+            <span class="error"><p id="email_error"></p></span>
+        </div>
+        <div class = "validate">
+            <button>Submit</button>
+        </div>
+    </form>
+    <br>
+    <br>
+    <a href="/">Return Home</a>
+</body>
+</html>

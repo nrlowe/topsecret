@@ -1,0 +1,29 @@
+<!DOCTYPE HTML>
+<html>
+<head> 
+    <title>Getting Started: Serving Web Content</title> 
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <link href="/css/home.css" rel="stylesheet">
+</head>
+<body>
+    <div class = "brackets">
+        <form th:action="@{/brackets}" method = "GET">
+            <input type="text" th:name="brackets">
+            <input type="Submit" value="LISP Problem">
+        </form>
+    </div>
+    <br>
+    <div class="frontendV">
+        <form th:action="@{/jsvalidation}">
+            <input type="Submit" value = "Front End Validation">
+        </form>
+    </div>
+    <br>
+    <div class = "csvtranscript">
+        <form th:action="@{/csvTranscript}" method = "POST" enctype="multipart/form-data">
+            <input type="file" th:name="csvFile">
+            <input type="Submit" value="CSV Transcription">
+        </form>
+    </div>
+
+</body>
